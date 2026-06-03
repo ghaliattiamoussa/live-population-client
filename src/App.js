@@ -8,6 +8,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // الرابط الصحيح (بدون تكرار)
         const response = await fetch('https://live-population-server.vercel.app/api/populations');
         const data = await response.json();
         setCountries(data);
@@ -19,7 +20,7 @@ function App() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 1000);
+    const interval = setInterval(fetchData, 5000); // تحديث كل 5 ثواني
     return () => clearInterval(interval);
   }, []);
 
@@ -42,12 +43,8 @@ function App() {
   const formatNumber = (num) => {
     if (num >= 1000000000) return (num / 1000000000).toFixed(2) + 'B';
     if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
-    if (num >= 1000) return (num / 1000000).toFixed(2) + 'M';
+    if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
     return num.toString();
-  };
-
-  const formatFullNumber = (num) => {
-    return new Intl.NumberFormat().format(Math.floor(num));
   };
 
   if (loading) {
@@ -61,12 +58,16 @@ function App() {
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e1b4b)', minHeight: '100vh', padding: '20px' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <h1 style={{ textAlign: 'center', fontSize: '48px', background: 'linear-gradient(135deg, #a855f7, #3b82f6, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '10px' }}>🌍 Live Population</h1>
-        <p style={{ textAlign: 'center', color: '#9ca3af', marginBottom: '20px' }}>Real-time people alive right now in every country</p>
+        <h1 style={{ textAlign: 'center', fontSize: '48px', background: 'linear-gradient(135deg, #a855f7, #3b82f6, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '10px' }}>
+          🌍 Live Population
+        </h1>
+        <p style={{ textAlign: 'center', color: '#9ca3af', marginBottom: '20px' }}>
+          Real-time people alive right now in every country
+        </p>
 
         <div style={{ background: 'rgba(255,255,255,0.1)', borderRadius: '20px', padding: '20px', textAlign: 'center', marginBottom: '30px' }}>
           <h3 style={{ color: '#a5b4fc', fontSize: '14px' }}>World Population Now</h3>
-          <div style={{ fontSize: '48px', fontWeight: 'bold', color: 'white' }}>{formatFullNumber(totalPopulation)}</div>
+          <div style={{ fontSize: '48px', fontWeight: 'bold', color: 'white' }}>{totalPopulation.toLocaleString()}</div>
           <div style={{ color: '#4ade80' }}>Live from server</div>
         </div>
 
@@ -97,6 +98,12 @@ function App() {
             </div>
           ))}
         </div>
+
+        {sortedCountries.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '40px', color: '#9ca3af' }}>
+            No countries found matching "{searchTerm}"
+          </div>
+        )}
       </div>
     </div>
   );
