@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { citiesData, statesData } from './citiesData';
+import { citiesData, statesData } from './statesData';
 
 function App() {
   const [countries, setCountries] = useState([]);
