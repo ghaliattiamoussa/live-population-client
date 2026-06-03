@@ -32,13 +32,14 @@ function App() {
   const totalPopulation = sortedCountries.reduce((sum, c) => sum + c.population, 0);
 
   const getFlagEmoji = (countryCode) => {
-  if (!countryCode) return '🏳️';
-  const codePoints = countryCode
-    .toUpperCase()
-    .split('')
-    .map(char => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-};
+    try {
+      const code = countryCode.toUpperCase();
+      const points = [...code].map(c => 127397 + c.charCodeAt(0));
+      return String.fromCodePoint(...points);
+    } catch (e) {
+      return '🏳️';
+    }
+  };
 
   const formatNumber = (num) => {
     if (num >= 1000000000) return (num / 1000000000).toFixed(2) + 'B';
@@ -58,7 +59,26 @@ function App() {
 
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e1b4b)', minHeight: '100vh', padding: '20px' }}>
-      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative' }}>
+        
+        {/* اسمك في أعلى اليمين */}
+        <div style={{ 
+          position: 'absolute', 
+          top: '0', 
+          right: '0',
+          backgroundColor: 'rgba(139, 92, 246, 0.2)',
+          padding: '8px 16px',
+          borderRadius: '50px',
+          border: '1px solid rgba(139, 92, 246, 0.5)',
+          fontSize: '14px',
+          fontWeight: '500',
+          color: '#c4b5fd',
+          backdropFilter: 'blur(10px)',
+          zIndex: 10
+        }}>
+          👤 ghaly attiy
+        </div>
+
         <h1 style={{ textAlign: 'center', fontSize: '48px', background: 'linear-gradient(135deg, #a855f7, #3b82f6, #ec4899)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '10px' }}>
           🌍 Live Population
         </h1>
