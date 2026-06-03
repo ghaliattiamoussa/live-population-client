@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import React, { useState, useEffect } from 'react';
 
 function App() {
@@ -58,7 +59,6 @@ function App() {
   return (
     <div style={{ background: 'linear-gradient(135deg, #0f172a, #1e1b4b)', minHeight: '100vh', padding: '20px' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative' }}>
-        
         {/* اسمك في أعلى اليمين */}
         <div style={{ 
           position: 'absolute', 
@@ -124,7 +124,9 @@ function App() {
           </div>
         )}
       </div>
+    ,<Analytics />
     </div>
+
   );
 }
 
