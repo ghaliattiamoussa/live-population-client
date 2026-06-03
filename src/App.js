@@ -32,12 +32,13 @@ function App() {
   const totalPopulation = sortedCountries.reduce((sum, c) => sum + c.population, 0);
 
   const getFlagEmoji = (countryCode) => {
-    const codePoints = countryCode
-      .toUpperCase()
-      .split('')
-      .map(char => 127397 + char.charCodeAt());
-    return String.fromCodePoint(...codePoints);
-  };
+  if (!countryCode) return '🏳️';
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt());
+  return String.fromCodePoint(...codePoints);
+};
 
   const formatNumber = (num) => {
     if (num >= 1000000000) return (num / 1000000000).toFixed(2) + 'B';
